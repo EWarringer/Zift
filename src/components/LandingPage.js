@@ -1,5 +1,6 @@
 // src/components/LandingPage.js
 import React, { useState } from 'react';
+import './LandingPage.css';
 
 const LandingPage = () => {
   const [inputValue, setInputValue] = useState('');  // State for text input
@@ -24,7 +25,7 @@ const LandingPage = () => {
         onChange={handleInputChange}
         style={styles.inputBox}
       />
-      <button onClick={handleMicClick} style={styles.micButton}>
+      <button onClick={handleMicClick} className="micButton">
         🎤
       </button>
     </div>
@@ -52,14 +53,6 @@ const styles = {
     borderRadius: '5px',
     border: '1px solid #ccc',
     marginBottom: '10px',
-  },
-  micButton: {
-    padding: '10px 20px',
-    fontSize: '1em',
-    borderRadius: '5px',
-    backgroundColor: '#007bff',
-    color: 'white',
-    cursor: 'pointer',
   },
 };
 
