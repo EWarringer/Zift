@@ -19,10 +19,10 @@ const LandingPage = () => {
     }
   };
 
-  // Temporary function for the microphone button (we'll expand this later)
-  const handleMicClick = () => {
-    alert("Voice input is not set up yet!");  // Just a placeholder
-  };
+  // // Temporary function for the microphone button (we'll expand this later)
+  // const handleMicClick = () => {
+  //   alert("Voice input is not set up yet!");  // Just a placeholder
+  // };
 
   return (
     <div style={styles.container}>
