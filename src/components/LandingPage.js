@@ -37,6 +37,14 @@ const LandingPage = () => {
       <button onClick={handleSaveNote} className="micButton">
         Save Note
       </button>
+      <div style={{ marginTop: '20px', color: 'white' }}>
+        <h2>Notes:</h2>
+        <ul>
+          {notes.map((note, index) => (
+            <li key={index}>{note}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
