@@ -3,11 +3,20 @@ import React, { useState } from 'react';
 import './LandingPage.css';
 
 const LandingPage = () => {
-  const [inputValue, setInputValue] = useState('');  // State for text input
+  const [inputValue, setInputValue] = useState('');  // Holds the current text input
+  const [notes, setNotes] = useState([]);            // Stores saved notes
 
   // Handle changes to the input
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
+  };
+
+  //Function to Handle Saving Notes
+  const handleSaveNote = () => {
+    if (inputValue.trim() !== '') {
+      setNotes([...notes, inputValue]);
+      setInputValue('');  // Clear the input field
+    }
   };
 
   // Temporary function for the microphone button (we'll expand this later)
@@ -25,8 +34,8 @@ const LandingPage = () => {
         onChange={handleInputChange}
         style={styles.inputBox}
       />
-      <button onClick={handleMicClick} className="micButton">
-        🎤
+      <button onClick={handleSaveNote} className="micButton">
+        Save Note
       </button>
     </div>
   );
