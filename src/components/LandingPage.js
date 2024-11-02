@@ -1,76 +1,84 @@
-// src/components/LandingPage.js
 import React, { useState } from 'react';
-import './LandingPage.css';
 
-const LandingPage = () => {
-  const [inputValue, setInputValue] = useState('');  // Holds the current text input
-  const [notes, setNotes] = useState([]);            // Stores saved notes
+function LandingPage() {
+  // State variables for notes, folders, input value, and selected folder
+  const [inputValue, setInputValue] = useState('');
+  const [folders, setFolders] = useState([{ name: 'Default', notes: [] }]);
+  const [selectedFolder, setSelectedFolder] = useState('Default');
 
-  // Handle changes to the input
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
-  //Function to Handle Saving Notes
+  // Function to handle saving a note to a selected folder
   const handleSaveNote = () => {
     if (inputValue.trim() !== '') {
-      setNotes([...notes, inputValue]);
-      setInputValue('');  // Clear the input field
+      setFolders((prevFolders) =>
+        prevFolders.map((folder) =>
+          folder.name === selectedFolder
+            ? { ...folder, notes: [...folder.notes, inputValue] }
+            : folder
+        )
+      );
+      setInputValue(''); // Clear the input after saving
     }
   };
 
-  // // Temporary function for the microphone button (we'll expand this later)
-  // const handleMicClick = () => {
-  //   alert("Voice input is not set up yet!");  // Just a placeholder
-  // };
-
   return (
-    <div style={styles.container}>
+    <div
+      style={{
+        textAlign: 'center',
+        color: 'white',
+        padding: '20px',
+        backgroundColor: '#282c34',
+        minHeight: '100vh', // Ensures the background color covers the full height
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+    >
+      {/* Logo */}
       <img src={`${process.env.PUBLIC_URL}/logo1.png`} alt="Zift Logo" style={{ width: '500px' }} />
+
+      {/* Header */}
+      <h2>Save your notes</h2>
+
+      {/* Dropdown to select folder */}
+      <select
+        value={selectedFolder}
+        onChange={(e) => setSelectedFolder(e.target.value)}
+        style={{ marginBottom: '10px' }}
+      >
+        {folders.map((folder) => (
+          <option key={folder.name} value={folder.name}>
+            {folder.name}
+          </option>
+        ))}
+      </select>
+
+      {/* Input and button to add a note */}
       <input
         type="text"
-        placeholder="Type or speak your idea..."
         value={inputValue}
-        onChange={handleInputChange}
-        style={styles.inputBox}
+        onChange={(e) => setInputValue(e.target.value)}
+        placeholder="Type a note here"
+        style={{ padding: '5px', marginRight: '10px' }}
       />
-      <button onClick={handleSaveNote} className="micButton">
-        Save Note
-      </button>
+      <button onClick={handleSaveNote}>Save Note</button>
+
+      {/* Displaying notes by folder */}
       <div style={{ marginTop: '20px', color: 'white' }}>
-        <h2>Notes:</h2>
-        <ul>
-          {notes.map((note, index) => (
-            <li key={index}>{note}</li>
-          ))}
-        </ul>
+        <h2>Notes by Folder:</h2>
+        {folders.map((folder) => (
+          <div key={folder.name} style={{ marginBottom: '20px' }}>
+            <h3>{folder.name}</h3>
+            <ul>
+              {folder.notes.map((note, index) => (
+                <li key={index}>{note}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   );
-};
-
-// Basic styling for layout
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh',
-    backgroundColor: '#282c34',
-  },
-  title: {
-    fontSize: '2em',
-    marginBottom: '20px',
-  },
-  inputBox: {
-    width: '300px',
-    padding: '10px',
-    fontSize: '1em',
-    borderRadius: '5px',
-    border: '1px solid #ccc',
-    marginBottom: '10px',
-  },
-};
+}
 
 export default LandingPage;
