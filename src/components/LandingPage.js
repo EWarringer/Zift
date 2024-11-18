@@ -6,6 +6,33 @@ function LandingPage() {
   const [folders, setFolders] = useState([{ name: 'Default', notes: [] }]);
   const [selectedFolder, setSelectedFolder] = useState('Default');
 
+  const [newFolderName, setNewFolderName] = useState('');
+  const handleAddFolder = () => {
+    if (
+      newFolderName.trim() !== '' &&
+      !folders.some((folder) => folder.name === newFolderName)
+    ) {
+      setFolders((prevFolders) => [
+        ...prevFolders,
+        { name: newFolderName, notes: [] },
+      ]);
+      setNewFolderName(''); // Clear the input
+    } else {
+      alert('Folder name must be unique.');
+    }
+  };
+
+  const Folder = ({ folder }) => (
+    <div style={{ marginBottom: '20px' }}>
+      <h3>{folder.name}</h3>
+      <ul>
+        {folder.notes.map((note, index) => (
+          <li key={index}>{note}</li>
+        ))}
+      </ul>
+    </div>
+  );
+
   // Function to handle saving a note to a selected folder
   const handleSaveNote = () => {
     if (inputValue.trim() !== '') {
@@ -53,6 +80,15 @@ function LandingPage() {
         ))}
       </select>
 
+      <input
+        type="text"
+        value={newFolderName}
+        onChange={(e) => setNewFolderName(e.target.value)}
+        placeholder="New Folder Name"
+        style={{ padding: '5px', marginRight: '10px' }}
+      />
+      <button onClick={handleAddFolder}>Add Folder</button>
+
       {/* Input and button to add a note */}
       <input
         type="text"
@@ -67,14 +103,7 @@ function LandingPage() {
       <div style={{ marginTop: '20px', color: 'white' }}>
         <h2>Notes by Folder:</h2>
         {folders.map((folder) => (
-          <div key={folder.name} style={{ marginBottom: '20px' }}>
-            <h3>{folder.name}</h3>
-            <ul>
-              {folder.notes.map((note, index) => (
-                <li key={index}>{note}</li>
-              ))}
-            </ul>
-          </div>
+          <Folder key={folder.name} folder={folder} />
         ))}
       </div>
     </div>
