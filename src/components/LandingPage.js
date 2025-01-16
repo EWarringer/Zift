@@ -1,109 +1,116 @@
+
 import React, { useState } from 'react';
+import { Configuration, OpenAIApi } from 'openai';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize OpenAI (you'll need to set up API key in environment variables)
+const configuration = new Configuration({
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 function LandingPage() {
-  // State variables for notes, folders, input value, and selected folder
   const [inputValue, setInputValue] = useState('');
-  const [folders, setFolders] = useState([{ name: 'Default', notes: [] }]);
-  const [selectedFolder, setSelectedFolder] = useState('Default');
+  const [folders, setFolders] = useState([]);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const [newFolderName, setNewFolderName] = useState('');
-  const handleAddFolder = () => {
-    if (
-      newFolderName.trim() !== '' &&
-      !folders.some((folder) => folder.name === newFolderName)
-    ) {
-      setFolders((prevFolders) => [
-        ...prevFolders,
-        { name: newFolderName, notes: [] },
-      ]);
-      setNewFolderName(''); // Clear the input
-    } else {
-      alert('Folder name must be unique.');
+  const processNoteWithAI = async (note) => {
+    try {
+      setIsProcessing(true);
+      
+      // Get AI suggestions for labels and folder
+      const completion = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [{
+          role: "system",
+          content: "Analyze this note and provide a category label and folder name. Response format: {label}|{folder}"
+        }, {
+          role: "user",
+          content: note
+        }],
+      });
+
+      const [label, suggestedFolder] = completion.data.choices[0].message.content.split('|');
+
+      // Create folder if it doesn't exist
+      if (!folders.some(f => f.name === suggestedFolder)) {
+        setFolders(prev => [...prev, { name: suggestedFolder, notes: [] }]);
+      }
+
+      // Add note to appropriate folder
+      setFolders(prev => prev.map(folder => 
+        folder.name === suggestedFolder 
+          ? { ...folder, notes: [...folder.notes, { content: note, label }] }
+          : folder
+      ));
+
+      setInputValue('');
+    } catch (error) {
+      console.error('Error processing note:', error);
+      alert('Error processing note. Please try again.');
+    } finally {
+      setIsProcessing(false);
     }
   };
 
-  const Folder = ({ folder }) => (
-    <div style={{ marginBottom: '20px' }}>
-      <h3>{folder.name}</h3>
-      <ul>
-        {folder.notes.map((note, index) => (
-          <li key={index}>{note}</li>
-        ))}
-      </ul>
-    </div>
-  );
-
-  // Function to handle saving a note to a selected folder
-  const handleSaveNote = () => {
-    if (inputValue.trim() !== '') {
-      setFolders((prevFolders) =>
-        prevFolders.map((folder) =>
-          folder.name === selectedFolder
-            ? { ...folder, notes: [...folder.notes, inputValue] }
-            : folder
-        )
-      );
-      setInputValue(''); // Clear the input after saving
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (inputValue.trim()) {
+      await processNoteWithAI(inputValue);
     }
   };
 
   return (
-    <div
-      style={{
-        textAlign: 'center',
-        color: 'white',
-        padding: '20px',
-        backgroundColor: '#282c34',
-        minHeight: '100vh', // Ensures the background color covers the full height
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      {/* Logo */}
+    <div style={{
+      textAlign: 'center',
+      color: 'white',
+      padding: '20px',
+      backgroundColor: '#282c34',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center'
+    }}>
       <img src={`${process.env.PUBLIC_URL}/logo1.png`} alt="Zift Logo" style={{ width: '500px' }} />
+      
+      <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Type your note here..."
+          style={{ padding: '10px', width: '300px', marginRight: '10px' }}
+          disabled={isProcessing}
+        />
+        <button type="submit" disabled={isProcessing}>
+          {isProcessing ? 'Processing...' : 'Save Note'}
+        </button>
+      </form>
 
-      {/* Header */}
-      <h2>Save your notes</h2>
-
-      {/* Dropdown to select folder */}
-      <select
-        value={selectedFolder}
-        onChange={(e) => setSelectedFolder(e.target.value)}
-        style={{ marginBottom: '10px' }}
-      >
+      <div style={{ marginTop: '40px', width: '80%' }}>
         {folders.map((folder) => (
-          <option key={folder.name} value={folder.name}>
-            {folder.name}
-          </option>
-        ))}
-      </select>
-
-      <input
-        type="text"
-        value={newFolderName}
-        onChange={(e) => setNewFolderName(e.target.value)}
-        placeholder="New Folder Name"
-        style={{ padding: '5px', marginRight: '10px' }}
-      />
-      <button onClick={handleAddFolder}>Add Folder</button>
-
-      {/* Input and button to add a note */}
-      <input
-        type="text"
-        value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
-        placeholder="Type a note here"
-        style={{ padding: '5px', marginRight: '10px' }}
-      />
-      <button onClick={handleSaveNote}>Save Note</button>
-
-      {/* Displaying notes by folder */}
-      <div style={{ marginTop: '20px', color: 'white' }}>
-        <h2>Notes by Folder:</h2>
-        {folders.map((folder) => (
-          <Folder key={folder.name} folder={folder} />
+          <div key={folder.name} style={{ 
+            marginBottom: '20px',
+            padding: '15px',
+            backgroundColor: 'rgba(255, 255, 255, 0.1)',
+            borderRadius: '8px'
+          }}>
+            <h3>{folder.name}</h3>
+            <ul style={{ listStyle: 'none', padding: 0 }}>
+              {folder.notes.map((note, index) => (
+                <li key={index} style={{ 
+                  marginBottom: '10px',
+                  padding: '10px',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  borderRadius: '4px'
+                }}>
+                  <div>{note.content}</div>
+                  <small style={{ color: '#61dafb' }}>Label: {note.label}</small>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
     </div>
