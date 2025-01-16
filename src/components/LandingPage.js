@@ -1,12 +1,19 @@
 
 import React, { useState } from 'react';
-import OpenAI from 'openai';
 
-// Initialize OpenAI (you'll need to set up API key in environment variables)
-const openai = new OpenAI({
-  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true
-});
+// Simple classification function
+const classifyNote = (note) => {
+  const text = note.toLowerCase();
+  if (text.includes('todo') || text.includes('task') || text.includes('need to')) {
+    return ['Task', 'Tasks'];
+  } else if (text.includes('idea') || text.includes('think') || text.includes('maybe')) {
+    return ['Idea', 'Ideas'];
+  } else if (text.includes('meeting') || text.includes('call') || text.includes('discuss')) {
+    return ['Meeting Note', 'Meetings'];
+  } else {
+    return ['General Note', 'General'];
+  }
+};
 
 function LandingPage() {
   const [inputValue, setInputValue] = useState('');
@@ -17,19 +24,8 @@ function LandingPage() {
     try {
       setIsProcessing(true);
       
-      // Get AI suggestions for labels and folder
-      const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
-        messages: [{
-          role: "system",
-          content: "Analyze this note and provide a category label and folder name. Response format: {label}|{folder}"
-        }, {
-          role: "user",
-          content: note
-        }],
-      });
-
-      const [label, suggestedFolder] = completion.choices[0].message.content.split('|');
+      // Use local classification instead of OpenAI
+      const [label, suggestedFolder] = classifyNote(note);
 
       // Create folder if it doesn't exist
       if (!folders.some(f => f.name === suggestedFolder)) {
