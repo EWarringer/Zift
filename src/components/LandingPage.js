@@ -1,13 +1,11 @@
 
 import React, { useState } from 'react';
-import { Configuration, OpenAIApi } from 'openai';
-import { createClient } from '@supabase/supabase-js';
+import OpenAI from 'openai';
 
 // Initialize OpenAI (you'll need to set up API key in environment variables)
-const configuration = new Configuration({
+const openai = new OpenAI({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 function LandingPage() {
   const [inputValue, setInputValue] = useState('');
@@ -19,7 +17,7 @@ function LandingPage() {
       setIsProcessing(true);
       
       // Get AI suggestions for labels and folder
-      const completion = await openai.createChatCompletion({
+      const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [{
           role: "system",
@@ -30,7 +28,7 @@ function LandingPage() {
         }],
       });
 
-      const [label, suggestedFolder] = completion.data.choices[0].message.content.split('|');
+      const [label, suggestedFolder] = completion.choices[0].message.content.split('|');
 
       // Create folder if it doesn't exist
       if (!folders.some(f => f.name === suggestedFolder)) {
