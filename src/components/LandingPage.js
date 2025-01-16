@@ -5,6 +5,7 @@ import OpenAI from 'openai';
 // Initialize OpenAI (you'll need to set up API key in environment variables)
 const openai = new OpenAI({
   apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true
 });
 
 function LandingPage() {
