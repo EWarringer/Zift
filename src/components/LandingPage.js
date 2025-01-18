@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 
 // Simple classification function
@@ -23,7 +22,7 @@ function LandingPage() {
   const processNoteWithAI = async (note) => {
     try {
       setIsProcessing(true);
-      
+
       // Use local classification instead of OpenAI
       const [label, suggestedFolder] = classifyNote(note);
 
@@ -68,7 +67,7 @@ function LandingPage() {
       alignItems: 'center'
     }}>
       <img src={`${process.env.PUBLIC_URL}/logo1.png`} alt="Zift Logo" style={{ width: '500px' }} />
-      
+
       <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
         <input
           type="text"
