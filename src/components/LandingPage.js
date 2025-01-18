@@ -61,10 +61,11 @@ function LandingPage() {
       padding: '20px',
       backgroundColor: '#282c34',
       minHeight: '100vh',
+      maxHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
+      overflowY: 'auto'
     }}>
       <img src={`${process.env.PUBLIC_URL}/logo1.png`} alt="Zift Logo" style={{ width: '500px' }} />
 
@@ -82,7 +83,12 @@ function LandingPage() {
         </button>
       </form>
 
-      <div style={{ marginTop: '40px', width: '80%' }}>
+      <div style={{ 
+        marginTop: '40px', 
+        width: '80%',
+        maxHeight: 'calc(100vh - 250px)',
+        overflowY: 'auto'
+      }}>
         {folders.map((folder) => (
           <div key={folder.name} style={{ 
             marginBottom: '20px',
