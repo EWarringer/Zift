@@ -1,0 +1,41 @@
+Uncaught runtime errors:
+×
+ERROR
+Link is not defined
+ReferenceError: Link is not defined
+    at https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:420:96
+    at Array.map (<anonymous>)
+    at LandingPage (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:412:25)
+    at renderWithHooks (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:19777:22)
+    at updateFunctionComponent (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:23344:24)
+    at beginWork (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:25063:20)
+    at HTMLUnknownElement.callCallback (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:10033:18)
+    at Object.invokeGuardedCallbackDev (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:10077:20)
+    at invokeGuardedCallback (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:10134:35)
+    at beginWork$1 (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:30032:11)
+ERROR
+Link is not defined
+ReferenceError: Link is not defined
+    at https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:420:96
+    at Array.map (<anonymous>)
+    at LandingPage (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:412:25)
+    at renderWithHooks (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:19777:22)
+    at updateFunctionComponent (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:23344:24)
+    at beginWork (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:25063:20)
+    at HTMLUnknownElement.callCallback (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:10033:18)
+    at Object.invokeGuardedCallbackDev (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:10077:20)
+    at invokeGuardedCallback (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:10134:35)
+    at beginWork$1 (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:30032:11)
+ERROR
+Link is not defined
+ReferenceError: Link is not defined
+    at https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:420:96
+    at Array.map (<anonymous>)
+    at LandingPage (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:412:25)
+    at renderWithHooks (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:19777:22)
+    at updateFunctionComponent (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:23344:24)
+    at beginWork (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:25063:20)
+    at beginWork$1 (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:30010:18)
+    at performUnitOfWork (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:29280:16)
+    at workLoopSync (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:29203:9)
+    at renderRootSync (https://f53e5691-3c21-409f-ad77-b7cb792e6bc0-00-wiusn8urgt9b.riker.replit.dev/static/js/bundle.js:29176:11)
