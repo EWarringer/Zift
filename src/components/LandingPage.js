@@ -96,7 +96,23 @@ function LandingPage() {
             backgroundColor: 'rgba(255, 255, 255, 0.1)',
             borderRadius: '8px'
           }}>
-            <h3>{folder.name}</h3>
+            <h3>
+              <Link 
+                to={`/folder/${folder.name}`} 
+                style={{ 
+                  color: 'white', 
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
+              >
+                {folder.name}
+                <span style={{ fontSize: '0.8em', color: '#61dafb' }}>
+                  View All ({folder.notes.length}) →
+                </span>
+              </Link>
+            </h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
               {folder.notes.map((note, index) => (
                 <li key={index} style={{ 
